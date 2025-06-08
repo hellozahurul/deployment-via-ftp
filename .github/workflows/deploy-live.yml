@@ -1,0 +1,22 @@
+name: Deploy to Live FTP
+
+on:
+  push:
+    branches:
+      - live
+
+jobs:
+  ftp-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to LIVE FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_LIVE_HOST }}
+          username: ${{ secrets.FTP_LIVE_USERNAME }}
+          password: ${{ secrets.FTP_LIVE_PASSWORD }}
+          protocol: ftp
+          local-dir: ./  # Adjust if needed
